@@ -36,7 +36,7 @@ int free1(void * ptrFree){
   while(tracker<=(ptrFree1-2)){
     if(tracker==(ptrFree1-2) && (*(short *)tracker&1)){
     	printf("Free makes it here\n");
-      *(short*)tracker = *(short *)tracker;
+      *(short*)tracker = *(short *)tracker-1;
       //defrag();
       return 1;
     }
