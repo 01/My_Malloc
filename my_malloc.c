@@ -9,7 +9,7 @@ static char *error = "Not Enough Space";
 int first =0;
 
 void defrag();
-int free1(char * ptr);
+int free1(void * ptrFree);
 void * malloc1(unsigned int size);
 /*void defrag(){
   
@@ -26,16 +26,17 @@ void * malloc1(unsigned int size);
 
 */
 
-int free1(char *ptrFree){
-  void * blockptr = &myblock[2];
-
-  if(ptrFree < &myblock[2] || ptrFree>&myblock[4999]) 
+int free1(void * ptrFree){
+  char * blockptr =  &myblock[2];
+  char * ptrFree1 = ptrFree;
+  if(ptrFree1 < &myblock[2] || ptrFree1>&myblock[4999]) 
     return 0;
   
   char * tracker = myblock;
-  while(tracker<=(ptrFree-2)){
-    if(tracker==(ptrFree-2) && (*(short *)tracker&1)){
-      *(short*)tracker--;
+  while(tracker<=(ptrFree1-2)){
+    if(tracker==(ptrFree1-2) && (*(short *)tracker&1)){
+    	printf("Free makes it here\n");
+      *(short*)tracker = *(short *)tracker;
       //defrag();
       return 1;
     }
@@ -95,6 +96,9 @@ int main(int argc, char *argv[]) {
   char * p= malloc1(10);
   short v = *(short*)(p-2);
   printf("%u\n", v );
+  free1(p);
+  v = *(short *)(p-2);
+  printf("%u\n", v);
 
   return 0;
 }
