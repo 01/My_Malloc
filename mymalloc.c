@@ -1,10 +1,6 @@
-
-
 #include "mymalloc.h"
 
-int arrayIntialized =0;
-
-typedef meta meta;
+int arrayInitialized =0;
 
 /*
  * The Defrag method is a method called each time a pointer is successfully freed. its purpose is to combine neighboring free memory blocks into a single memory
@@ -14,7 +10,6 @@ typedef meta meta;
  * there is no scenario where more then 3 consequtive memory blocks are all free, the method continues through the whole memory so that this method can 
  * defrag an array
 */
-
 void defrag(){
 	
 	char * tracker = myblock;
@@ -45,7 +40,7 @@ void defrag(){
  * myFree is a custom replacement method to replace the C standard Library's Free method for freeing dynamocially allocated memory
  */
 
-void myfree(void * ptrFree){
+void myfree(void * ptrFree, char * file, int line){
   
 	char * ptrFree1 = (char *) ptrFree;
   
@@ -66,7 +61,7 @@ void myfree(void * ptrFree){
 
 }
 
-void * mymalloc (unsigned int size) {;
+void * mymalloc (unsigned short size, char * file, int line) {
 	if (!arrayInitialized){
   		*(meta *) myblock = (meta) 4998;
     	arrayInitialized = 1;
@@ -92,16 +87,16 @@ void * mymalloc (unsigned int size) {;
 
   	while(track< &myblock[4999]){
  	
- 		currBlocksize = (*(meta*)track- (*(meta *)curr%2));
+ 		currBlocksize = (*(meta*)track- (*(meta *)track%2));
  
- 		if (!(*(meta *)curr%2) && currBlocksize >= short_size){  //check if location is free
+ 		if (!(*(meta *)track%2) && currBlocksize >= short_size){  //check if location is free
 
         	*(meta *)track= short_size+1;   //+1 to signify allocated space 
-        	*(meta *)(curr+short_size+2) = currBlocksize - short_size-2;
-        	return (void *) curr+2;
+        	*(meta *)(track+short_size+2) = currBlocksize - short_size-2;
+        	return (void *) (track+2);
         }
         
-        curr+=currBlocksize +2;
+        track+=(currBlocksize +2);
     }
   
   printf("Not Enough Space - 0 signifies unallocated\n");
@@ -111,7 +106,6 @@ void * mymalloc (unsigned int size) {;
 
 
 int main(int argc, char *argv[]) {
-
-
+	free(myblock);
   return 0;
 }

@@ -1,16 +1,12 @@
 CC = gcc
-CCFLAGS = -Wall -g
+CFLAGS = -Wall -g -m32
 
-all: runfile
-
-runfile: mymalloc.o memgrind.o
-	$(CC) $(CCFLAGS) -o runfile mymalloc.o memgrind.o
+all: memgrind.c mymalloc.o
+	$(CC) $(CFLAGS) -o memgrind memgrind.c mymalloc.o
 
 mymalloc.o: mymalloc.c mymalloc.h
-	$(CC) $(CCFLAGS) -c mymalloc.c
+	$(CC) $(CFLAGS) -c mymalloc.c
 
-memgrind.o: memgrind.c
-	$(CC) $(CCFLAGS) -c memgrind.c
 
 clean:
-rm -f runfile mymalloc.o memgrind.o
+	rm -rf *.o mymalloc memgrind
