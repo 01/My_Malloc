@@ -63,8 +63,9 @@ int free1(void * ptrFree){
 }
 
 void * malloc1 (unsigned int size) {
+  printf("Size of this malloc %u\n", size );
   if (first == 0){
-  	printf("makes it here\n");
+  	printf("makes it here\n"); 
     *(unsigned short *) myblock = (unsigned short) 4998;
     first=1;
   }
@@ -113,7 +114,7 @@ void testD(){
          printf("J : %d\n", j);
          if(count==0 || (j && count!=i)){
             malloc_pointers[count] = malloc1(rand()%6000);
-            if(malloc_pointers[count])printf("Size of malloc: %u\n", *(unsigned short *)malloc_pointers[count]);
+            if(malloc_pointers[count])printf("Size of malloc: %u\n\n", *(unsigned short *)(malloc_pointers[count]-2));
             count++;
         }
         else{
