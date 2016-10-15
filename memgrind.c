@@ -1,5 +1,14 @@
-testA(){
-    int i=0,sucess_malloc=0, success_free=0, operations = 0;
+#include "mymalloc.h"
+
+void testA();
+void testB();
+void testC();
+void testD();
+void testE();
+void testF();
+
+void testA(){
+    int i=0, sucess_malloc = 0, success_free = 0;
     void * malloc_ptrs [3000];
     for(i=0; i<3000; i++){
         
@@ -19,7 +28,7 @@ testA(){
 }
 
 
-testB(){
+void testB(){
     int i = 0;
     for(; i<3000; i++){
        free(malloc(1))
@@ -44,12 +53,12 @@ void testC(){
           
         }
          else if(count==0){
-            malloc_pointers[count] = malloc1(1);
+            malloc_pointers[count] = mymalloc(1);
             count++;
          
         }
         else if(j) {
-            malloc_pointers[count] = malloc1(1);
+            malloc_pointers[count] = mymalloc(1);
             count++;
          
         }
@@ -74,7 +83,7 @@ void testD(){
     {    j =rand()%2;
          printf("J : %d\n", j);
          if(count==0 || (j && count!=i)){
-            malloc_pointers[count] = malloc1(rand()%6000);
+            malloc_pointers[count] = mymalloc(rand()%6000);
             if(malloc_pointers[count])printf("Size of malloc: %u\n\n", *(unsigned short *)(malloc_pointers[count]-2));
             count++;
         }
@@ -88,4 +97,33 @@ void testD(){
 printf("Final Count %d\n", count);
 }
 
+
+/*void testE(){
+    meta * track = myblock;
+    while(track <= &myblock[4998]){
+        *track = rand()%10000;
+        track++;
+
+}*/
      
+
+int main(int argc, char *argv[]) {
+  
+    struct timeval begin, end ;   int i = 0;
+   float time [100];
+   for(; i<100; i++){
+        gettimeofday(&begin, NULL);
+        testA();
+        testB();
+        testC();
+        testD();
+        gettimeofday(&end, NULL);
+        time[i]= (end.tv_sec * 1000000 + end.tv_usec)
+         - (begin.tv_sec * 1000000 + begin.tv_usec);
+        printf("\n%ld microseconds\n", ((end.tv_sec * 1000000 + end.tv_usec)
+         - (begin.tv_sec * 1000000 + begin.tv_usec)));
+
+   }
+  
+  return 0;
+}

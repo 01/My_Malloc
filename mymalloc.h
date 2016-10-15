@@ -19,6 +19,6 @@ extern char myblock[5000];
 void defrag();
 void testA();
 void * mymalloc(unsigned short x, char * file, int line);
-void myfree(void * p, char * file, int line);
+void myfree(void * x, char * file, int line);
 
 #endif

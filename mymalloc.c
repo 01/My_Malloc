@@ -42,6 +42,15 @@ void defrag(){
 
 void myfree(void * ptrFree, char * file, int line){
   
+  	if (!arrayInitialized){
+  		*(meta *) myblock = (meta) 4998;
+    	arrayInitialized = 1;
+    }
+    if(ptrFree == NULL) {
+    	printf("Pointer is NULL\n"); 
+    	return;
+    }
+
 	char * ptrFree1 = (char *) ptrFree;
   
   	if(ptrFree1 < &myblock[2] || ptrFree1>&myblock[4999]){ printf("Pointer ourside of mmemory\n"); return;}
@@ -113,6 +122,7 @@ void * mymalloc (unsigned short size, char * file, int line) {
 
 
 int main(int argc, char *argv[]) {
-	free(myblock);
+	char * p;
+	free(p);
   return 0;
 }
