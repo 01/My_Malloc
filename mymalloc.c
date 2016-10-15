@@ -44,19 +44,26 @@ void myfree(void * ptrFree, char * file, int line){
   
 	char * ptrFree1 = (char *) ptrFree;
   
-  	if(ptrFree1 < &myblock[2] || ptrFree1>&myblock[4999]) return;
-  
+  	if(ptrFree1 < &myblock[2] || ptrFree1>&myblock[4999]){ printf("Pointer ourside of mmemory\n"); return;}
+
   	char * tracker = myblock;
   	while(tracker<=(ptrFree1-2)){
-   		if(tracker==(ptrFree1-2) && !(*(meta *)tracker & ~1)){
+   		if(tracker==(ptrFree1-2)){
+   			if(!(*(meta *)tracker & ~1)){
     		*(meta*)tracker = *(meta *)tracker-1;
       		defrag();
       		return;
+    		}
+    		else{
+    			printf("This pointer is to a free block of memory, can not double free\n");
+    			return;
+    		}
     	}
 
     	tracker+=(*(meta *)tracker-= (*(meta *)tracker %2));
   	}
   
+  printf("Pointer was not an allocated block\n");
   return;
 
 }

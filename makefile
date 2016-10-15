@@ -1,12 +1,20 @@
-CC = gcc
-CFLAGS = -Wall -g -m32
-
-all: memgrind.c mymalloc.o
-	$(CC) $(CFLAGS) -o memgrind memgrind.c mymalloc.o
-
-mymalloc.o: mymalloc.c mymalloc.h
-	$(CC) $(CFLAGS) -c mymalloc.c
 
 
-clean:
-	rm -rf *.o mymalloc memgrind
+#Variable definition
+CC  = gcc 
+CCFLAGS = -Wall 
+
+#rules definition
+mymalloc : mymalloc.c mymalloc.h
+	$(CC) $(CCFLAGS) -o mymalloc mymalloc.c
+
+#This rule cleans up executable file
+
+
+all: mymalloc memgrind
+
+main: mymalloc.c
+	gcc -g mymalloc.c mymalloc.h memgrindc.c -o mymalloc
+
+clean: 
+	rm -f mymalloc 
