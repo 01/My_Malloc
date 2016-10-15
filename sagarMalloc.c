@@ -12,7 +12,7 @@ int initializedArray = 0;
 
 void *malloc1 (int size) {
   if (!intializedArray){
-    *(short*) myblock = 4998 +1;
+      *(short*) myblock = 4998 +1;
     initializedArray=1;
   }
   if (size < 0){

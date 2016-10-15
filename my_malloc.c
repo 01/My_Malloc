@@ -4,6 +4,7 @@
 #include <stdlib.h>
 #include <ctype.h>
 #include <time.h>
+#include "mymalloc.h"
 
 static char myblock[5000];
 static char *error = "Not Enough Space";
@@ -12,7 +13,7 @@ int first =0;
 void defrag();
 
 int free1(void * ptrFree);
-void * malloc1(unsigned int size);
+void * mymalloc(unsigned int size);
 void defrag();
 void defrag(){
   
@@ -62,7 +63,7 @@ int free1(void * ptrFree){
 
 }
 
-void * malloc1 (unsigned int size) {
+void * mymalloc (unsigned int size) {
   printf("Size of this malloc %u\n", size );
   if (first == 0){
   	printf("makes it here\n"); 
@@ -104,28 +105,7 @@ void * malloc1 (unsigned int size) {
   return NULL;
 }
 
-void testD(){
-    int count = 0;
-    void* malloc_pointers [3000];
-    int i, j;
-    srand ( time(NULL) );
-    for (i = 6000; i > 0; i--)
-    {    j =rand()%2;
-         printf("J : %d\n", j);
-         if(count==0 || (j && count!=i)){
-            malloc_pointers[count] = malloc1(rand()%6000);
-            if(malloc_pointers[count])printf("Size of malloc: %u\n\n", *(unsigned short *)(malloc_pointers[count]-2));
-            count++;
-        }
-        else{
-            free1(malloc_pointers[count]);
-            printf("Free\n");
-            count--;
-        }
-        printf("Count %d: %d\n", i, count);
-}
-printf("Final Count %d\n", count);
-}
+
 
 int main(int argc, char *argv[]) {
 
