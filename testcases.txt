@@ -1,0 +1,20 @@
+Test 1: char * p= malloc(10);	//Malloc block size 10
+Output: Size of this malloc 10
+
+Test 2: char * p= malloc(10000); //Malloc block larger than 5000
+Output: Size of this malloc 10000
+	Memory request larger then size of heap
+
+Test 3: char * p= malloc(0); //Malloc block size 0
+Output: Size of this malloc 0
+
+Test 4: char * p1= malloc(1000); //Malloc 5 pointers size 1000
+  	char * p2= malloc(1000); //Should fail due to meta data space
+  	char * p3= malloc(1000);
+  	char * p4= malloc(1000);
+  	char * p5= malloc(1000);
+Output: Not Enough Space
+
+Test 5: char * p1; //free unallocated pointer 
+	free (p1);
+Output: Pointer outside of memory
